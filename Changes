@@ -1,4 +1,7 @@
 Revision history for Perl extension Date::Holidays::DK.
 
+0.02  22-may-2004
+  - Added dk_holidays()
+
 0.01  19-apr-2004
-	- first version
+  - first version

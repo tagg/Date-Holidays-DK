@@ -6,32 +6,53 @@ use Date::Simple;
 use Date::Easter;
 
 use vars qw($VERSION @EXPORT);
-$VERSION = '0.01';
-@EXPORT = qw(is_dk_holiday);
+$VERSION = '0.02';
+@EXPORT = qw(is_dk_holiday dk_holidays);
 
-sub is_dk_holiday {
-  my ($year, $month, $day) = @_;
-
-  my $n = {'0101' => "Nytårsdag",
+# Fixed-date holidays
+my $FIX = {'0101' => "Nytårsdag",
 	   '0605' => "Grundlovsdag",
 	   '1224' => "Juleaftensdag",
 	   '1225' => "Juledag",
 	   '1226' => "2. Juledag",
-	  }->{sprintf "%02d%02d", $month, $day};
+	  };
 
-  return $n if $n;
+# Holidays relative to Easter
+my $VAR = {-7 => "Palmesøndag",
+	   -3 => "Skærtorsdag",
+	   -2 => "Langfredag",
+	    0 => "Påskedag",
+	    1 => "2. Påskedag",
+	   26 => "Store Bededag",
+	   39 => "Kristi Himmelfartsdag",
+	   49 => "Pinsedag",
+	   50 => "2. Pinsedag",
+	  };
 
-  return {-7 => "Palmesøndag",
-	  -3 => "Skærtorsdag",
-	  -2 => "Langfredag",
-	   0 => "Påskedag",
-	   1 => "2. Påskedag",
-	  26 => "Store Bededag",
-	  39 => "Kristi Himmelfartsdag",
-	  49 => "Pinsedag",
-	  50 => "2. Pinsedag",
-	 }->{Date::Simple->new($year, $month, $day) -
-	     Date::Simple->new($year, easter($year))} || undef;
+sub is_dk_holiday {
+  my ($year, $month, $day) = @_;
+
+  $FIX->{sprintf "%02d%02d", $month, $day} ||
+  $VAR->{Date::Simple->new($year, $month, $day) -
+	 Date::Simple->new($year, easter($year))} ||
+  undef;
+}
+
+sub dk_holidays {
+  my ($year) = @_;
+
+  # get the fixed dates
+  my $h = {%$FIX};
+
+  my $easter = Date::Simple->new($year, easter($year));
+
+  # build the relative dates
+  foreach my $diff (keys %$VAR) {
+    my $date = $easter + $diff;
+    $h->{sprintf "%02d%02d", $date->month, $date->day} = $VAR->{$diff};
+  }
+
+  return $h;
 }
 
 1;
@@ -48,12 +69,15 @@ Date::Holidays::DK - Determine Danish public holidays
   $month += 1;
   print "Woohoo" if is_dk_holiday( $year, $month, $day );
 
+  my $h = dk_holidays($year);
+  printf "Dec. 25th is named '%s'\n", $h->{'1225'};
+
 =head1 DESCRIPTION
 
 Determines whether a given date is a Danish public holiday or not.
 
-This module employs the simple API of Date::Holidays::UK, but
-implements a generalised detection mechanism, that will work for all
+This module employsis based on the simple API of Date::Holidays::UK,
+but implements a generalised date mechanism, that will work for all
 years since 1700, when Denmark adopted the Gregorian calendar.
 
 =head1 Functions
@@ -65,11 +89,17 @@ years since 1700, when Denmark adopted the Gregorian calendar.
 Returns the name of the Holiday that falls on the given day, or undef
 if there is none.
 
+=item dk_holidays($year)
+
+Returns a hashref of all defined holidays in the year. Keys in the
+hashref are in 'mmdd' format, the values are the names of the
+holidays.
+
 =back
 
-=head1 EXPORT
+=head1 EXPORTS
 
-Exports is_dk_holiday() by default.
+Exports is_dk_holiday() and dk_holidays() by default.
 
 =head1 BUGS
 
@@ -81,9 +111,12 @@ or by sending mail to
 
   bug-Date-Holidays-DK@rt.cpan.org
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Lars Thegler <lars@thegler.dk>
+Lars Thegler <lars@thegler.dk>. Originally inspired by
+Date::Holidays::UK by Richard Clamp.
+
+dk_holidays() concept by Jonas B. Nielsen.
 
 =head1 COPYRIGHT
 
