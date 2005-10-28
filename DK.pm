@@ -6,7 +6,7 @@ use Date::Simple;
 use Date::Easter;
 
 use vars qw($VERSION @EXPORT);
-$VERSION = '0.02';
+$VERSION = '0.03';
 @EXPORT = qw(is_dk_holiday dk_holidays);
 
 # Fixed-date holidays
@@ -76,8 +76,8 @@ Date::Holidays::DK - Determine Danish public holidays
 
 Determines whether a given date is a Danish public holiday or not.
 
-This module employsis based on the simple API of Date::Holidays::UK,
-but implements a generalised date mechanism, that will work for all
+This module is based on the simple API of Date::Holidays::UK, but
+implements a generalised date mechanism, that will work for all
 years since 1700, when Denmark adopted the Gregorian calendar.
 
 =head1 Functions
@@ -120,7 +120,7 @@ dk_holidays() concept by Jonas B. Nielsen.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2004 Lars Thegler. All rights reserved.
+Copyright (c) 2004-2005 Lars Thegler. All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

@@ -6,7 +6,7 @@ Module::Build->new(
   requires => {Date::Simple => 0,
 	       Date::Easter => 0,
 	       Test::More => 0,
-	       Test::Pod => 1.00},
+              },
   license => 'perl',
   create_makefile_pl => 'traditional',
 )->create_build_script;
