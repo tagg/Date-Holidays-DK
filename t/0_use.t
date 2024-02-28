@@ -1,5 +1,5 @@
 # -*- perl -*-
-use Test::More tests => 23;
+use Test::More tests => 24;
 
 BEGIN {
   use_ok('Date::Holidays::DK');
@@ -25,6 +25,7 @@ t(2004,  5, 29, undef);
 t(2004,  5, 30, "Pinsedag");
 t(2004,  5, 31, "2. Pinsedag");
 t(2004,  6,  1, undef);
+t(2024,  4, 26, undef); # "Store Bededag" not a holiday after 2023
 
 sub t {
   my ($y, $m, $d, $n) = @_;
@@ -41,7 +42,6 @@ ok(eq_hash($h, {
   '0409' => "Langfredag",
   '0411' => "Påskedag",
   '0412' => "2. Påskedag",
-  '0507' => "Store Bededag",
   '0520' => "Kristi Himmelfartsdag",
   '0530' => "Pinsedag",
   '0531' => "2. Pinsedag",

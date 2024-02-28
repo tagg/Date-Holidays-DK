@@ -17,8 +17,10 @@ my $FIX = {'0101' => "Nytårsdag",
 	   '1226' => "2. Juledag",
 	  };
 
+my $VAR;
+
 # Holidays relative to Easter
-my $VAR = {-7 => "Palmesøndag",
+my $VAR_PRE2024 = {-7 => "Palmesøndag",
 	   -3 => "Skærtorsdag",
 	   -2 => "Langfredag",
 	    0 => "Påskedag",
@@ -29,13 +31,32 @@ my $VAR = {-7 => "Palmesøndag",
 	   50 => "2. Pinsedag",
 	  };
 
+# "Store Bededag" no longer a holiday after 2023
+my $VAR_POST2023 = {-7 => "Palmesøndag",
+	   -3 => "Skærtorsdag",
+	   -2 => "Langfredag",
+	    0 => "Påskedag",
+	    1 => "2. Påskedag",
+	   39 => "Kristi Himmelfartsdag",
+	   49 => "Pinsedag",
+	   50 => "2. Pinsedag",
+	  };
+
 sub is_dk_holiday {
   my ($year, $month, $day) = @_;
 
-  $FIX->{sprintf "%02d%02d", $month, $day} ||
+  if ($year >= 2024) {
+    $VAR = $VAR_POST2023;
+  } else {
+    $VAR = $VAR_PRE2024;
+  }
+
+  my $holiday = $FIX->{sprintf "%02d%02d", $month, $day} ||
   $VAR->{Date::Simple->new($year, $month, $day) -
 	 Date::Simple->new($year, easter($year))} ||
   undef;
+
+  return $holiday;
 }
 
 sub dk_holidays {
