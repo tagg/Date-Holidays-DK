@@ -4,13 +4,14 @@ use base qw(Exporter);
 
 use Date::Simple;
 use Date::Easter;
+use utf8;
 
 use vars qw($VERSION @EXPORT);
-$VERSION = '0.03';
+$VERSION = '0.04';
 @EXPORT = qw(is_dk_holiday dk_holidays);
 
 # Fixed-date holidays
-my $FIX = {'0101' => "Nytårsdag",
+my $FIX = {'0101' => "NytÃ¥rsdag",
 	   '0605' => "Grundlovsdag",
 	   '1224' => "Juleaftensdag",
 	   '1225' => "Juledag",
@@ -20,11 +21,11 @@ my $FIX = {'0101' => "Nytårsdag",
 my $VAR;
 
 # Holidays relative to Easter
-my $VAR_PRE2024 = {-7 => "Palmesøndag",
-	   -3 => "Skærtorsdag",
+my $VAR_PRE2024 = {-7 => "PalmesÃ¸ndag",
+	   -3 => "SkÃ¦rtorsdag",
 	   -2 => "Langfredag",
-	    0 => "Påskedag",
-	    1 => "2. Påskedag",
+	    0 => "PÃ¥skedag",
+	    1 => "2. PÃ¥skedag",
 	   26 => "Store Bededag",
 	   39 => "Kristi Himmelfartsdag",
 	   49 => "Pinsedag",
@@ -32,11 +33,11 @@ my $VAR_PRE2024 = {-7 => "Palmesøndag",
 	  };
 
 # "Store Bededag" no longer a holiday after 2023
-my $VAR_POST2023 = {-7 => "Palmesøndag",
-	   -3 => "Skærtorsdag",
+my $VAR_POST2023 = {-7 => "PalmesÃ¸ndag",
+	   -3 => "SkÃ¦rtorsdag",
 	   -2 => "Langfredag",
-	    0 => "Påskedag",
-	    1 => "2. Påskedag",
+	    0 => "PÃ¥skedag",
+	    1 => "2. PÃ¥skedag",
 	   39 => "Kristi Himmelfartsdag",
 	   49 => "Pinsedag",
 	   50 => "2. Pinsedag",
