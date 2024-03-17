@@ -1,0 +1,10 @@
+_build/
+blib/
+Build
+Date-Holidays-DK-*
+Makefile.PL
+META.json
+META.yml
+MYMETA.json
+MYMETA.yml
+*.bak
