@@ -1,0 +1,26 @@
+# Avoid version control files.
+\B\.git\b
+\B\.gitignore\b
+
+# Avoid Makemaker generated and utility files.
+\bblib/
+
+# Avoid Module::Build generated and utility files.
+\bBuild$
+\b_build/
+
+# Avoid temp and backup files.
+~$
+\.old$
+\.bak$
+
+# Avoid configuration metadata file
+^MYMETA\.
+
+# Avoid Module::Build generated and utility files.
+\bBuild$
+\b_build
+^MANIFEST\.SKIP
+
+# Avoid archives of this distribution
+\bDate-Holidays-DK-[\d\.\_]+
