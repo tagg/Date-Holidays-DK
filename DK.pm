@@ -7,7 +7,7 @@ use Date::Easter;
 use utf8;
 
 use vars qw($VERSION @EXPORT);
-$VERSION = '0.04';
+$VERSION = '0.05';
 @EXPORT = qw(is_dk_holiday dk_holidays);
 
 # Fixed-date holidays
@@ -148,7 +148,7 @@ dk_holidays() concept by Jonas B. Nielsen.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2004-2005 Lars Thegler. All rights reserved.
+Copyright (c) 2004-2025 Lars Thegler. All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
