@@ -66,6 +66,12 @@ sub dk_holidays {
   # get the fixed dates
   my $h = {%$FIX};
 
+  if ($year >= 2024) {
+    $VAR = $VAR_POST2023;
+  } else {
+    $VAR = $VAR_PRE2024;
+  }
+
   my $easter = Date::Simple->new($year, easter($year));
 
   # build the relative dates
